@@ -105,7 +105,7 @@ void terminal_writestring(const char* data)
     terminal_write(data, strlen(data));
 }
 
-void kernal_main(void)
+void kernel_main(void)
 {
     terminal_initialize();
 

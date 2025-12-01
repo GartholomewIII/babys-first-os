@@ -23,11 +23,12 @@ _start:
 
     mov $stack_top, %esp
 
-    call kernal_main
+    call kernel_main
 
-    cli
-    hlt
-    jmp 1b
+	cli
+1:	hlt
+	jmp 1b
+
 
 .size _start, . - _start
 
