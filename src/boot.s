@@ -1,7 +1,7 @@
 .set ALIGN, 1<<0
 .set MEMINFO, 1<<1
-.set FLAGS, ALIGN | MEMINFO #Multiboot flag field
-.set MAGIC, 0x1BADB002 #lets GRUB bootloader find header
+.set FLAGS, ALIGN | MEMINFO
+.set MAGIC, 0x1BADB002
 .set CHECKSUM, -(MAGIC + FLAGS)
 
 .section .multiboot
@@ -13,22 +13,19 @@
 .section .bss
 .align 16
 stack_bottom:
-.skip 16384 #16 KiB
+    .skip 16384
 stack_top:
 
 .section .text
 .global _start
 .type _start, @function
 _start:
+    mov $stack_top, %esp      # set up stack
+    call kernel_main          # call C kernel entry point
 
-    mov $stack_top, %esp
-
-    call kernel_main
-
-	cli
-1:	hlt
-	jmp 1b
-
+    cli                       # disable interrupts
+halt_loop:
+    hlt
+    jmp halt_loop
 
 .size _start, . - _start
-

@@ -1,24 +1,20 @@
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-
+#include "terminal.h"
 #include "gdt.h"
-#include terminal.h
-
-#if defined(__linux__)
-#error "YOU ARE NOT USING A CROSS COMPILER"
-#endif
-
-#if !defined(__i386__)
-#error "YOU NEED A ix86-elf compiler"
-#endif
-
+#include "idt.h"
+#include "isr.h"
+#include "irq.h"
 
 void kernel_main(void)
-{   
-    gdt_install();
-
+{
     terminal_initialize();
+    gdt_install();
+    idt_install();
+    isr_install();
+    irq_install();
 
-    terminal_writestring("ELLO GOVNA \n");
+    asm volatile("sti");  // enable interrupts
+
+    terminal_writestring("System Ready. Press ENTER.\n");
+
+    while (1) { }
 }
