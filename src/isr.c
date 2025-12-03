@@ -90,10 +90,9 @@ static inline uint8_t inb(uint16_t port) {
 
 void isr_handler_c(uint32_t int_no)
 {
-    
     if (int_no < 32) {
         terminal_writestring("Exception: ");
-        
+
         char buf[4] = {'0','0','0','\0'};
         int d = int_no;
         buf[2] = '0' + (d % 10); d /= 10;
@@ -101,18 +100,16 @@ void isr_handler_c(uint32_t int_no)
         buf[0] = '0' + (d % 10);
         terminal_writestring(buf);
         terminal_writestring("\n");
+
+        while (1) { }
     } else {
-        
         if (int_no == 33) { 
             uint8_t sc = inb(0x60);
-            // For now print only when Enter pressed
-            if (sc == SC_ENTER) {
+            if ((sc & 0x80) == 0 && sc == SC_ENTER) {
                 terminal_writestring("ENTER PRESS DETECTED!\n");
             }
-            
         }
 
-        
         uint8_t irq = int_no - 32;
         if (irq >= 8) {
             outb(PIC2_CMD, 0x20);
@@ -120,3 +117,4 @@ void isr_handler_c(uint32_t int_no)
         outb(PIC1_CMD, 0x20);
     }
 }
+

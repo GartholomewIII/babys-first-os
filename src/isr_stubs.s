@@ -1,10 +1,18 @@
+.section .text
+.extern isr_handler_c      # C: void isr_handler_c(uint32_t int_no);
 
 .macro ISR_NOERR n
 .global isr\n
 isr\n:
-    cli
-    pushl $\n          # push immediate interrupt number
-    jmp isr_common_stub
+    cli                    # disable interrupts
+    pusha                  # save general-purpose registers
+
+    pushl $\n              # push interrupt number as argument
+    call isr_handler_c
+    add $4, %esp           # pop argument
+
+    popa                   # restore registers
+    iret                   # return from interrupt
 .endm
 
 ISR_NOERR 0
@@ -39,12 +47,3 @@ ISR_NOERR 28
 ISR_NOERR 29
 ISR_NOERR 30
 ISR_NOERR 31
-
-.global isr_common_stub
-isr_common_stub:
-    pusha
-    pushl %eax        
-    call isr_handler_c
-    add $4, %esp
-    popa
-    iret

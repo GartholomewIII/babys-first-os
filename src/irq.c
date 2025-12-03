@@ -21,17 +21,6 @@ static inline uint8_t inb(uint16_t port)
     return ret;
 }
 
-void keyboard_handler_c()
-{
-    uint8_t sc = inb(0x60);
-
-    if (sc == 0x1C){
-        terminal_writestring("ENTER PRESS DETECTED!");
-
-        //eventually call music handler
-    }
-}
-
 void irq_install(void)
 {
     // Remap PIC
@@ -48,5 +37,8 @@ void irq_install(void)
 
     // install keyboard IRQ
     idt_set_gate(33, (uint32_t)irq1, 0x08, 0x8E);
+
+    outb(PIC1_DATA, 0xFD);  // 11111101b -> only IRQ1 (bit 1) unmasked
+    outb(PIC2_DATA, 0xFF);  // mask all on slave
 }
 

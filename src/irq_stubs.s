@@ -1,6 +1,15 @@
 .section .text
+.extern isr_handler_c      # same C handler
+
 .global irq1
 irq1:
-    cli                 # disable interrupts
-    pushl $33           # push interrupt number (IRQ1)
-    jmp isr_common_stub # jump to common C handler
+    cli
+    pusha
+
+    # PIC remapped to 0x20; IRQ1 = 0x20 + 1 = 33
+    pushl $33
+    call isr_handler_c
+    add $4, %esp
+
+    popa
+    iret
