@@ -1,3 +1,13 @@
+/*
+=========================================================================================================
+Author : Quinn Olney
+
+Purpose: impliments PIC which routes interrupts to the CPU
+=========================================================================================================
+*/
+
+
+
 #include "idt.h"
 #include "irq.h"
 #include "terminal.h"
@@ -23,7 +33,7 @@ static inline uint8_t inb(uint16_t port)
 
 void irq_install(void)
 {
-    // Remap PIC
+
     outb(PIC1_COMMAND, 0x11);
     outb(PIC2_COMMAND, 0x11);
     outb(PIC1_DATA, 0x20);
@@ -35,10 +45,10 @@ void irq_install(void)
     outb(PIC1_DATA, 0x0);
     outb(PIC2_DATA, 0x0);
 
-    // install keyboard IRQ
+
     idt_set_gate(33, (uint32_t)irq1, 0x08, 0x8E);
 
-    outb(PIC1_DATA, 0xFD);  // 11111101b -> only IRQ1 (bit 1) unmasked
-    outb(PIC2_DATA, 0xFF);  // mask all on slave
+    outb(PIC1_DATA, 0xFD);  
+    outb(PIC2_DATA, 0xFF);  
 }
 

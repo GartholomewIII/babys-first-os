@@ -1,3 +1,11 @@
+/*
+=========================================================================================================
+Author : Quinn Olney
+
+Purpose: keyboard handler, interacts with the terminal and detects keyboard input to display
+=========================================================================================================
+*/
+
 #include <stdint.h>
 #include "terminal.h"
 #include "keyboard.h"

@@ -1,4 +1,10 @@
-// isr.c
+/*
+=========================================================================================================
+Author : Quinn Olney
+
+Purpose: Handles interrupts, if keyboard is pressed, a char is put on screen
+=========================================================================================================
+*/
 #include <stdint.h>
 #include "terminal.h"
 #include "idt.h"
@@ -96,7 +102,6 @@ void isr_handler_c(uint32_t int_no)
     } else {
         if (int_no == 33) {   
             keyboard_handle_irq();
- 
         }
 
         uint8_t irq = int_no - 32;

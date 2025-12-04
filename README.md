@@ -41,4 +41,22 @@ hardware interrupt line, it allows you to read input from hardware, for example 
 
 Impliment a simple beep when the enter key is pressed (far more realistic)
 
+## 12/03/2025
+
+Today I decided to take a little bit of a break and just modularize and document a little better, I implimented typing which was fairly simple
+Just mapping keys to putting characters in the terminal, tomorrow I hope to spend a little more time on this, documenting and learning more, below I have the typing example!
+
+![typing_example](readme-assets/typing-example.gif)
+
+### What I've Learned:
+
+Now that we are further away from assembly and more towards C, implimenting new changes shouldn't be nearly as dangerous and scary, I didn't study much today but I'll have loads more 
+tomorrow!
+
+#### Goals for Next Session:
+
+impliment a buffer so I can have a pseudo command shell, type 'boop' and have your speakers play a beep sound, I will make it more sophistocated as time goes on
+
+
+
 

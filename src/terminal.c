@@ -1,3 +1,13 @@
+/*
+=========================================================================================================
+Author : Quinn Olney
+
+Purpose: Initializes the viewport and allows for basic ASCII chars to be displayed on screen
+=========================================================================================================
+*/
+
+
+
 #include "terminal.h"
 
 
@@ -81,20 +91,20 @@ void terminal_putchar(char c)
     if (c == '\n') {
         terminal_column = 0;
         if (++terminal_row == VGA_HEIGHT) {
-            terminal_row = 0;   // later you can replace this with a scroll()
+            terminal_row = 0;   
         }
         return;
     }
 
-    // Handle carriage return (optional, but nice to have)
+    
     if (c == '\r') {
         terminal_column = 0;
         return;
     }
 
-    // Handle backspace
+    
     if (c == '\b') {
-        // Move cursor back one position (with simple wrap to previous line)
+        
         if (terminal_column > 0) {
             --terminal_column;
         } else if (terminal_row > 0) {
@@ -102,18 +112,18 @@ void terminal_putchar(char c)
             terminal_column = VGA_WIDTH - 1;
         }
 
-        // Overwrite the previous character with a space
+        
         terminal_putentryat(' ', terminal_color, terminal_column, terminal_row);
         return;
     }
 
-    // Normal printable character
+    
     terminal_putentryat(c, terminal_color, terminal_column, terminal_row);
 
     if (++terminal_column == VGA_WIDTH) {
         terminal_column = 0;
         if (++terminal_row == VGA_HEIGHT) {
-            terminal_row = 0;   // later: scroll instead of wrap to top
+            terminal_row = 0;   
         }
     }
 }
