@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "terminal.h"
 #include "idt.h"
-
+#include "keyboard.h"
 
 extern void isr0();
 extern void isr1();
@@ -37,7 +37,7 @@ extern void isr29();
 extern void isr30();
 extern void isr31();
 
-void isr_install() {
+void isr_install(void) {
     idt_set_gate(0,  (uint32_t)isr0,  0x08, 0x8E);
     idt_set_gate(1,  (uint32_t)isr1,  0x08, 0x8E);
     idt_set_gate(2,  (uint32_t)isr2,  0x08, 0x8E);
@@ -75,18 +75,9 @@ void isr_install() {
 static inline void outb(uint16_t port, uint8_t val) {
     __asm__ volatile ("outb %0, %1" : : "a"(val), "Nd"(port));
 }
-static inline uint8_t inb(uint16_t port) {
-    uint8_t ret;
-    __asm__ volatile ("inb %1, %0" : "=a"(ret) : "Nd"(port));
-    return ret;
-}
 
 #define PIC1_CMD 0x20
 #define PIC2_CMD 0xA0
-
-
-#define SC_ENTER 0x1C
-
 
 void isr_handler_c(uint32_t int_no)
 {
@@ -101,13 +92,11 @@ void isr_handler_c(uint32_t int_no)
         terminal_writestring(buf);
         terminal_writestring("\n");
 
-        while (1) { }
+        while (1) { }   
     } else {
-        if (int_no == 33) { 
-            uint8_t sc = inb(0x60);
-            if ((sc & 0x80) == 0 && sc == SC_ENTER) {
-                terminal_writestring("ENTER PRESS DETECTED!\n");
-            }
+        if (int_no == 33) {   
+            keyboard_handle_irq();
+ 
         }
 
         uint8_t irq = int_no - 32;
@@ -117,4 +106,3 @@ void isr_handler_c(uint32_t int_no)
         outb(PIC1_CMD, 0x20);
     }
 }
-

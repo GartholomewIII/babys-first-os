@@ -14,7 +14,6 @@ void kernel_main(void)
 
     asm volatile("sti");  // enable interrupts
 
-    terminal_writestring("System Ready. Press ENTER.\n");
 
     while (1) { }
 }

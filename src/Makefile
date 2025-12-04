@@ -7,7 +7,7 @@ CFLAGS=-m32 -ffreestanding -O2 -Wall -Wextra -nostdlib -fno-builtin
 ASFLAGS=
 LDFLAGS=-T linker.ld
 
-# Object files (added terminal.o)
+# Object files
 OBJS = \
     boot.o \
     gdt.o gdt_flush.o \
@@ -15,6 +15,7 @@ OBJS = \
     isr.o isr_stubs.o \
     irq.o irq_stubs.o \
     terminal.o \
+    keyboard.o \
     kernel.o
 
 TARGET = myos.bin
@@ -31,7 +32,7 @@ gdt.o: gdt.c gdt.h
 idt.o: idt.c idt.h
 	$(CC) $(CFLAGS) -c idt.c -o idt.o
 
-isr.o: isr.c isr.h idt.h
+isr.o: isr.c isr.h idt.h keyboard.h
 	$(CC) $(CFLAGS) -c isr.c -o isr.o
 
 irq.o: irq.c irq.h idt.h
@@ -39,6 +40,9 @@ irq.o: irq.c irq.h idt.h
 
 terminal.o: terminal.c terminal.h
 	$(CC) $(CFLAGS) -c terminal.c -o terminal.o
+
+keyboard.o: keyboard.c keyboard.h terminal.h
+	$(CC) $(CFLAGS) -c keyboard.c -o keyboard.o
 
 kernel.o: kernel.c gdt.h idt.h isr.h irq.h terminal.h
 	$(CC) $(CFLAGS) -c kernel.c -o kernel.o
