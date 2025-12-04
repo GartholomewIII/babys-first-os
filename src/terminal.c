@@ -9,8 +9,11 @@ Purpose: Initializes the viewport and allows for basic ASCII chars to be display
 
 
 #include "terminal.h"
+#include <stdint.h>
 
-
+static inline void outb(uint16_t port, uint8_t val) {
+    __asm__ volatile ("outb %0, %1" : : "a"(val), "Nd"(port));
+}
 
 enum vga_color {
     VGA_COLOR_BLACK = 0,
@@ -62,7 +65,7 @@ void terminal_initialize(void)
 {
     terminal_row = 0;
     terminal_column = 0;
-    terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+    terminal_color = vga_entry_color(VGA_COLOR_LIGHT_BLUE, VGA_COLOR_WHITE);
 
     
     for (size_t y = 0; y < VGA_HEIGHT; y++) {
@@ -73,6 +76,17 @@ void terminal_initialize(void)
         }
     }
 }
+
+static void terminal_update_cursor(void)
+{
+    uint16_t pos = terminal_row * VGA_WIDTH +terminal_column;
+
+    outb(0x3D4, 0x0F);
+    outb(0x3D5, (uint8_t)(pos & 0xFF));
+    outb(0x3D4, 0x0E);
+    outb(0x3D5, (uint8_t)((pos >> 8) & 0xFF));
+}
+
 
 void terminal_setcolor(uint8_t color)
 {
@@ -93,12 +107,14 @@ void terminal_putchar(char c)
         if (++terminal_row == VGA_HEIGHT) {
             terminal_row = 0;   
         }
+        terminal_update_cursor();
         return;
     }
 
     
     if (c == '\r') {
         terminal_column = 0;
+        terminal_update_cursor();
         return;
     }
 
@@ -114,6 +130,7 @@ void terminal_putchar(char c)
 
         
         terminal_putentryat(' ', terminal_color, terminal_column, terminal_row);
+        terminal_update_cursor();
         return;
     }
 
@@ -126,6 +143,7 @@ void terminal_putchar(char c)
             terminal_row = 0;   
         }
     }
+    terminal_update_cursor();
 }
 
 void terminal_write(const char* data, size_t size)

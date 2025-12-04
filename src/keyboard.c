@@ -26,6 +26,47 @@ static const char keymap[128] = {
     // rest default to 0
 };
 
+//--LINE BUFFER--
+
+#define INPUT_MAX 128
+static char input_buffer[INPUT_MAX];
+static uint32_t input_len = 0;
+
+static int streq(const char* a, const char* b)
+{
+    while (*a && *b) {
+        if (*a != *b){
+            return 0;
+        }
+        else {
+            a++; 
+            b++;
+        }
+    }
+    return *a == *b;
+}
+
+static void execute_command(const char* cmd)
+{
+    if (streq(cmd, "beep")){
+        terminal_writestring("BOOP\n");
+    } else if (streq(cmd, "boop")) {
+        terminal_writestring("BEEP\n");
+    } else if (streq(cmd, "clear")) {
+        terminal_initialize();
+    } else if (streq(cmd, "about")) {
+        terminal_writestring("Babys first OS, an attempt at something AWESOME\n");
+    } else {
+        terminal_writestring("UNKNOWN COMMAND TRY AGAIN\n");
+    }
+
+}
+
+static void prompt(void)
+{
+    terminal_writestring(">");
+}
+
 void keyboard_handle_irq(void)
 {
     uint8_t sc = inb(0x60);
@@ -46,15 +87,31 @@ void keyboard_handle_irq(void)
 
     if (c == '\n') {
         terminal_putchar('\n');
+        
+        if (input_len > 0) {
+            input_buffer[input_len] = '\0';
+
+            execute_command(input_buffer);
+
+            input_len= 0;
+        }
+        prompt();
         return;
     }
 
     if (c == '\b') {
+        if (input_len > 0){
+            input_len--;
 
-        terminal_putchar('\b');
+            terminal_putchar('\b');
+        }
         return;
     }
 
-    // Normal printable character
-    terminal_putchar(c);
+    if (input_len < INPUT_MAX - 1) {
+        input_buffer[input_len++] = c;
+        terminal_putchar(c);
+    }
+
+    
 }

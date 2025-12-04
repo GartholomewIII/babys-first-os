@@ -21,8 +21,10 @@ void kernel_main(void)
     isr_install();
     irq_install();
 
-    asm volatile("sti");  // enable interrupts
+    asm volatile("sti"); 
 
+    terminal_writestring("System Ready.\n");
+    terminal_writestring("> ");   
 
     while (1) { }
 }
