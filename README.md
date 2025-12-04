@@ -57,6 +57,20 @@ tomorrow!
 
 impliment a buffer so I can have a pseudo command shell, type 'boop' and have your speakers play a beep sound, I will make it more sophistocated as time goes on
 
+## 12/04/2025
 
+Today I finally got the beep to work! Unfortunately I can only upload via GIF so you can't hear it. I also implimented a buffer and commands.
+
+![beep](readme-assets/audio-example.gif)
+
+### What I've Learned:
+
+I am starting to understand the flow of interrupts a little bit more. First we need to establish IDT gates, which will be a sort of flag for CPU tasks to execute. The flag in this instance
+is the keyboard which is established with: idt_set_gate(33, (uint32_t)irq1, 0x08, 0x8E); in irq.c, then in isr.c we can actually reference this gate when executing something, for example
+when this flag is triggered we run keyboard_handle_irq(); which lives in keyboard.h and in that file we impliment our shell and call speaker.c to provide audio output.
+
+#### Goals for Next Session:
+
+I want to be able to import a wav file, but that might be difficult, more research!
 
 
