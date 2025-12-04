@@ -9,6 +9,7 @@ Purpose: keyboard handler, interacts with the terminal and detects keyboard inpu
 #include <stdint.h>
 #include "terminal.h"
 #include "keyboard.h"
+#include "speaker.h"
 
 static inline uint8_t inb(uint16_t port) {
     uint8_t ret;
@@ -49,7 +50,7 @@ static int streq(const char* a, const char* b)
 static void execute_command(const char* cmd)
 {
     if (streq(cmd, "beep")){
-        terminal_writestring("BOOP\n");
+        speaker_beep();
     } else if (streq(cmd, "boop")) {
         terminal_writestring("BEEP\n");
     } else if (streq(cmd, "clear")) {

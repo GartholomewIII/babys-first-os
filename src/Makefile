@@ -16,7 +16,8 @@ OBJS = \
     irq.o irq_stubs.o \
     terminal.o \
     keyboard.o \
-    kernel.o
+	speaker.o \
+    kernel.o 
 
 TARGET = myos.bin
 
@@ -44,8 +45,12 @@ terminal.o: terminal.c terminal.h
 keyboard.o: keyboard.c keyboard.h terminal.h
 	$(CC) $(CFLAGS) -c keyboard.c -o keyboard.o
 
+speaker.o: speaker.c speaker.h
+	$(CC) $(CFLAGS) -c speaker.c -o speaker.o
+
 kernel.o: kernel.c gdt.h idt.h isr.h irq.h terminal.h
 	$(CC) $(CFLAGS) -c kernel.c -o kernel.o
+
 
 # Assembly rules
 boot.o: boot.s
