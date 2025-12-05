@@ -10,6 +10,7 @@ Purpose: keyboard handler, interacts with the terminal and detects keyboard inpu
 #include "terminal.h"
 #include "keyboard.h"
 #include "speaker.h"
+#include "chords.h"
 
 static inline uint8_t inb(uint16_t port) {
     uint8_t ret;
@@ -57,6 +58,8 @@ static void execute_command(const char* cmd)
         terminal_initialize();
     } else if (streq(cmd, "about")) {
         terminal_writestring("Babys first OS, an attempt at something AWESOME\n");
+    } else if (streq(cmd, "cmaj")) {
+        cmaj();
     } else {
         terminal_writestring("UNKNOWN COMMAND TRY AGAIN\n");
     }

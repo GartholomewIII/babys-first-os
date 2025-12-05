@@ -17,6 +17,7 @@ OBJS = \
     terminal.o \
     keyboard.o \
 	speaker.o \
+	chords.o \
     kernel.o 
 
 TARGET = myos.bin
@@ -47,6 +48,9 @@ keyboard.o: keyboard.c keyboard.h terminal.h
 
 speaker.o: speaker.c speaker.h
 	$(CC) $(CFLAGS) -c speaker.c -o speaker.o
+
+chords.o: chords.c chords.h
+	$(CC) $(CFLAGS) -c chords.c -o chords.o
 
 kernel.o: kernel.c gdt.h idt.h isr.h irq.h terminal.h
 	$(CC) $(CFLAGS) -c kernel.c -o kernel.o

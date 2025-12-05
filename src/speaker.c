@@ -17,14 +17,16 @@ static inline uint8_t inb(uint16_t port) {
 #define PIT_CHANNEL2 0x42
 #define PIT_COMMAND 0x43
 
-static void delay(volatile uint32_t count)
+
+void speaker_delay(volatile uint32_t count)
 {
     while (count--) {
         __asm__ volatile("nop");
     }
 }
 
-static void speaker_play_freq(uint32_t freq)
+
+void speaker_play_freq(uint32_t freq)
 {
     if (freq == 0) return;
 
@@ -41,7 +43,8 @@ static void speaker_play_freq(uint32_t freq)
     }
 }
 
-static void speaker_stop(void)
+
+void speaker_stop(void)
 {
     uint8_t tmp = inb(0x61) & 0xFC;
     outb(0x61, tmp);
@@ -49,9 +52,42 @@ static void speaker_stop(void)
 
 void speaker_beep(void)
 {
-
-
-    speaker_play_freq(440);           // 440 Hz, nice tone
-    delay(50000000);                  // MUCH longer: ~0.5s+ in QEMU
+    // example: short A4 beep
+    speaker_play_freq(440);
+    speaker_delay(50000000);
     speaker_stop();
 }
+/*
+
+    speaker_play_freq(440); //a        
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(494); //b
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(523); //c
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(587); //d
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(659); //e
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(698); //f
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(784); //g
+    delay(50000000);                
+    speaker_stop();
+
+    speaker_play_freq(880); //a
+    delay(50000000);                
+    speaker_stop();
+    */
