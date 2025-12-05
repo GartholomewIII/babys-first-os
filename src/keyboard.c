@@ -58,9 +58,37 @@ static void execute_command(const char* cmd)
         terminal_initialize();
     } else if (streq(cmd, "about")) {
         terminal_writestring("Babys first OS, an attempt at something AWESOME\n");
-    } else if (streq(cmd, "cmaj")) {
+    } 
+    
+    
+    else if (streq(cmd, "chord -help")) {
+        terminal_writestring("Chord Commands Are as Follows:\n");
+        terminal_writestring("cmaj - c major chord\n");
+        terminal_writestring("dmin - d minor chord\n");
+        terminal_writestring("emin - e major chord\n");
+        terminal_writestring("fmaj - f major chord\n");
+        terminal_writestring("gmaj - g major chord\n");
+        terminal_writestring("amin - a minor chord\n");
+        terminal_writestring("bdim - b diminished chord\n");
+    }
+    else if (streq(cmd, "cmaj")) {
         cmaj();
-    } else {
+    }else if (streq(cmd, "dmin")) {
+        dmin();
+    }else if (streq(cmd, "emin")) {
+        emin();
+    }else if (streq(cmd, "fmaj")) { //CHORDS
+        fmaj();
+    }else if (streq(cmd, "gmaj")) {
+        gmaj();
+    }else if (streq(cmd, "amin")) {
+        amin();
+    }else if (streq(cmd, "bdim")) {
+        bdim();
+    }
+
+
+    else {
         terminal_writestring("UNKNOWN COMMAND TRY AGAIN\n");
     }
 
