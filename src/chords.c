@@ -31,7 +31,8 @@ void dmin(void)
     speaker_stop();
 }
 void emin(void)
-{
+{   
+    
     speaker_play_freq(659); //e
     speaker_delay(250000000);                
     speaker_stop();
@@ -40,7 +41,7 @@ void emin(void)
     speaker_delay(250000000);                
     speaker_stop();
 
-    speaker_play_freq(494); //b
+    speaker_play_freq(988); //b
     speaker_delay(250000000);                
     speaker_stop();
 }
@@ -54,7 +55,7 @@ void fmaj(void)
     speaker_delay(250000000);                
     speaker_stop();   
 
-    speaker_play_freq(523); //c
+    speaker_play_freq(1046); //c
     speaker_delay(250000000);                
     speaker_stop();
 }
@@ -64,11 +65,11 @@ void gmaj(void)
     speaker_delay(250000000);                
     speaker_stop();
 
-    speaker_play_freq(494); //b
+    speaker_play_freq(988); //b
     speaker_delay(250000000);                
     speaker_stop();
 
-    speaker_play_freq(587); //d
+    speaker_play_freq(1175); //d
     speaker_delay(250000000);                
     speaker_stop();
 }
@@ -78,11 +79,11 @@ void amin(void)
     speaker_delay(250000000);                
     speaker_stop();
 
-    speaker_play_freq(523); //c
+    speaker_play_freq(1046); //c
     speaker_delay(250000000);                
     speaker_stop();
 
-    speaker_play_freq(659); //e
+    speaker_play_freq(1318); //e
     speaker_delay(250000000);                
     speaker_stop();
 
