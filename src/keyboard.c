@@ -85,9 +85,9 @@ static void execute_command(const char* cmd)
         amin();
     }else if (streq(cmd, "bdim")) {
         bdim();
+    }else if (streq(cmd, "zelda")) {
+        zelda();
     }
-
-
     else {
         terminal_writestring("UNKNOWN COMMAND TRY AGAIN\n");
     }

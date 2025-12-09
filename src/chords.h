@@ -9,3 +9,5 @@ void fmaj(void);
 void gmaj(void);
 void amin(void);
 void bdim(void);
+void zelda(void);
+

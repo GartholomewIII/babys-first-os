@@ -102,3 +102,73 @@ void bdim(void)
     speaker_delay(250000000);                
     speaker_stop();
 }
+
+void zelda(void)
+{
+    speaker_play_freq(698); //f
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(880); //a
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(988); //b
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(698); //f
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(880); //a
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(988); //b
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(698); //f
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(880); //a
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(988); //b
+    speaker_delay(125000000);                
+    speaker_stop();
+
+
+    speaker_play_freq(1318); //e
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(1174); //d
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(988); //b
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(1046); //c
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(988); //b
+    speaker_delay(125000000);                
+    speaker_stop();
+
+    speaker_play_freq(784); //g
+    speaker_delay(125000000);                
+    speaker_stop();
+
+
+    speaker_play_freq(659); //e
+    speaker_delay(250000000);                
+    speaker_stop();
+
+}
